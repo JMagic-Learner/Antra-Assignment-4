@@ -50,7 +50,7 @@
     </div>
 
     <div id="button-container">
-      <button class="fade">Fade Out a class or id </button>
+      <button class="fade">FadeOut an element tag, class, or id </button>
       <input id="fade-search" type="text"  placeholder="Type in the .test-container2 or #test-container to see them dissapaer after a while">
     </div>
 
@@ -186,23 +186,19 @@
         
        }
         fadeOut() {
-          let targetElement = this.elements;
-          targetElement.backgroundColor="black"
           this.elements.forEach((item) => {
 
-            console.log(this.elements);
-            
-            let k = window.setInterval(function () {
-            let initialOpacity = 0
-              if (initialOpacity > 100) {
-                clearInterval(k);
-              } else {
-              
-                item.style.opacity = initialOpacity / 100;
-                item.style.easing = initialOpacity / 100;
-                initialOpacity++;
-              }
-            }, 1000);
+            console.log(item);
+            let initial = 0
+            item.style.opacity=initial;
+            setInterval(() => {
+              initial = initial+1;
+              item.style.opacity=initial/100;
+            }
+            , 150)
+            // for (let i = 0; i<=1000; i++) {
+            //   item.style.opacity = i/1000
+            // }
         });
        }
     }
