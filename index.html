@@ -191,11 +191,17 @@
             console.log(item);
             let initial = 0
             item.style.opacity=initial;
-            setInterval(() => {
+            let timer = setInterval(() => {
               initial = initial+1;
               item.style.opacity=initial/100;
+              if (initial > 100) {
+                clearInterval(timer)
+              }
             }
             , 150)
+          
+          
+         
             // for (let i = 0; i<=1000; i++) {
             //   item.style.opacity = i/1000
             // }
