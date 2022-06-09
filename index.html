@@ -10,6 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
+    <link href="./CSS/style.css" type="text/css" rel="stylesheet" />	
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -29,45 +30,48 @@
     </div>
 
     <div id="targeted">
-      <p class="explanation"> The below are the mocked functions/methods</p>
+      <h3 class="explanation"> The below are the mocked functions/methods</h3>
+      <h3 class="explanation"> You can also try cloning in this div container by typing in #targeted</h3>
     </div>
 
     <div id="button-container">
       <button class="clone">Test clone</button>
-      <input id="clone-search" type="text" style="width:100%" placeholder="Type in the element tag [p,h1,h2,div] or type in a class [.test-container2] or type in a id [#test-container]">
+      <input id="clone-search" type="text"  placeholder="Type in the element tag [p,h1,h2,div] or type in a class [.test-container2] or type in a id [#test-container]">
     </div>
 
     <div id="button-container">
       <button class="width">Test width </button>
-      <input id="width-search" type="text" style="width:100%" placeholder="Type in either .test-container2 or #test-container to see thier widths in console">
+      <input id="width-search" type="text"  placeholder="Type in either .test-container2 or #test-container to see thier widths in console">
     </div>
 
     <div id="button-container">
       <button class="highlight"> Highlight all matching tags </button>
-      <input id="highlight-search" type="text" style="width:100%" placeholder="type in the element tag to highlight ">
+      <input id="highlight-search" type="text"  placeholder="type in the element tag to highlight ">
     </div>
 
     <div id="button-container">
       <button class="fade">Fade Out a class or id </button>
-      <input id="fade-search" type="text" style="width:100%" placeholder="Type in the .test-container2 or #test-container to see them dissapaer after a while">
+      <input id="fade-search" type="text"  placeholder="Type in the .test-container2 or #test-container to see them dissapaer after a while">
     </div>
 
-    <div id="test-container">
+    <div id="clone-this-container">
+      <div class="clone-container">
       <ul>
         <li> Clone this List </li>
         <li> Clone this List </li>
         <li> Clone this List </li>
         <li> Clone this List </li>
       </ul>
+      </div>
     </div>
 
-    <div class="test-container2" style="background-color:yellow; width:50%; margin:10%;">
+    <div class="test-container2 container" >
      <h1> Type in .test-container2 to clone the list into this container</h1>
      <h1> Type in .test-container2 to see the width of this element in console</h1>
      <h1> Type in .test-container2 to see the fade out this element in console [WIP]</h1>
     </div>
 
-    <div id="test-container3" style="background-color:yellow; width:50%; margin:10%;">
+    <div class="container" id="test-container3">
       <h1> Type in #test-container3 to clone the list into this container</h1>
       <h1> Type in #test-container3 to see the width of this element in console</h1>
       <h1> Type in #test-container3 to see the fade out this element in console [WIP]</h1>
@@ -139,7 +143,7 @@
         console.log("The clone method has started");
         let body = document.querySelector('body');
         this.elements.forEach((item) => {
-          let targetElement=item;
+          
           let targetElementClass = item.tagName.toLowerCase();
           let targetElementClassName = item.className;
           let targetElementContent = item.innerHTML;
@@ -147,7 +151,6 @@
           let newElement = document.createElement(targetElementClass);
           newElement.innerHTML= targetElementContent;
           newElement.className=targetElementClassName;
-
           if (parent) {
           let specifiedParent = document.querySelector(parent)
           specifiedParent.appendChild(newElement);
@@ -237,7 +240,7 @@
         'click',
         function (event) {
           let input = document.getElementById("clone-search");
-          $$("#test-container").clone(input.value); 
+          $$("#clone-this-container").clone(input.value); 
         }
       );
 
