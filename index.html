@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <title>JQuery</title>
+  </head>
+  <body>
+    <button class="continue">Button 1</button>
+    <button class="continue">Button 2</button>
+
+    <span id="banner-message"
+      >banner-message</span
+    >
+    <div id="button-container">
+      <button>Show</button>
+    </div>
+
+    <div id="targeted">
+      <p class="explanation"> The below are the mocked functions/methods</p>
+    </div>
+
+    <div id="button-container">
+      <button class="clone">Test clone</button>
+      <input id="clone-search" type="text" style="width:100%" placeholder="Type in the element tag [p,h1,h2,div] or type in a class [.test-container2] or type in a id [#test-container]">
+    </div>
+
+    <div id="button-container">
+      <button class="width">Test width </button>
+      <input id="width-search" type="text" style="width:100%" placeholder="Type in either .test-container2 or #test-container to see thier widths in console">
+    </div>
+
+    <div id="button-container">
+      <button class="highlight"> Highlight all matching tags </button>
+      <input id="highlight-search" type="text" style="width:100%" placeholder="type in the element tag to highlight ">
+    </div>
+
+    <div id="button-container">
+      <button class="fade">Fade Out a class or id </button>
+      <input id="fade-search" type="text" style="width:100%" placeholder="Type in the .test-container2 or #test-container to see them dissapaer after a while">
+    </div>
+
+    <div id="test-container">
+      <ul>
+        <li> Clone this List </li>
+        <li> Clone this List </li>
+        <li> Clone this List </li>
+        <li> Clone this List </li>
+      </ul>
+    </div>
+
+    <div class="test-container2" style="background-color:yellow; width:50%; margin:10%;">
+     <h1> Type in .test-container2 to clone the list into this container</h1>
+     <h1> Type in .test-container2 to see the width of this element in console</h1>
+     <h1> Type in .test-container2 to see the fade out this element in console [WIP]</h1>
+    </div>
+
+    <div id="test-container3" style="background-color:yellow; width:50%; margin:10%;">
+      <h1> Type in #test-container3 to clone the list into this container</h1>
+      <h1> Type in #test-container3 to see the width of this element in console</h1>
+      <h1> Type in #test-container3 to see the fade out this element in console [WIP]</h1>
+     </div>
+ 
+
+    <script>
+      class PQuery {
+        constructor(selector) {
+          // target the element
+          if (
+            (selector === window) |
+            (selector === document)
+          ) {
+            this.elements = [selector];
+          } else {
+            this.elements =
+              document.querySelectorAll(selector);
+          }
+        }
+        html(innerhtml) {
+          console.log('html is working');
+          // change the innerHTML for the target element
+          this.elements.forEach((item) => {
+            item.innerHTML = innerhtml;
+          });
+          return this;
+        }
+        hide() {
+          this.elements.forEach((item) => {
+            item.preDispaly = item.style.display;
+            item.style.display = 'none';
+          });
+          return this;
+        }
+        on(eventType, callback) {
+          this.elements.forEach((item) => {
+            item.addEventListener(
+              eventType,
+              callback
+            );
+          });
+          return this;
+        }
+        show() {
+          this.elements.forEach((item) => {
+            item.style.display = item.preDispaly;
+          });
+          return this;
+        }
+        tagSelector(targetHTML) {
+         
+         let targetCondition = targetHTML.toLowerCase();
+     
+         this.elements.forEach((item) => {
+          
+         let lowercaseVariant2 = item.tagName.toLowerCase() || item.className || item.id;
+         if (lowercaseVariant2 === targetCondition) {
+    
+          
+          item.style.backgroundColor = "green";
+        
+         }
+        });
+      
+        }
+        clone(parent){
+        
+        console.log("The clone method has started");
+        let body = document.querySelector('body');
+        this.elements.forEach((item) => {
+          let targetElement=item;
+          let targetElementClass = item.tagName.toLowerCase();
+          let targetElementClassName = item.className;
+          let targetElementContent = item.innerHTML;
+          console.log( targetElementClass, targetElementContent);
+          let newElement = document.createElement(targetElementClass);
+          newElement.innerHTML= targetElementContent;
+          newElement.className=targetElementClassName;
+
+          if (parent) {
+          let specifiedParent = document.querySelector(parent)
+          specifiedParent.appendChild(newElement);
+          } else {
+          body.appendChild(newElement);
+          }
+          
+        
+        });
+      }
+       width(optionalParameter){
+         let total;
+        this.elements.forEach((item) => {
+     
+          if (optionalParameter) {
+          item.style.width = optionalParameter
+        }
+          let measurements = getComputedStyle(item);
+          let marginLeft = parseInt(measurements.marginLeft);
+          let marginRight = parseInt(measurements.marginRight);
+          let borderRightWidth = parseInt(measurements.borderRightWidth) || 0;
+          let borderLeftWidth = parseInt(measurements.borderLeftWidth) || 0;
+          let paddingRightWidth = parseInt(measurements.paddingRightWidth) || 0;
+          let paddingLeftWidth = parseInt(measurements.paddingLeftWidth) || 0;
+          let notfunctionWidth = parseInt(measurements.width);
+          console.log(measurements);
+          console.log(marginLeft + marginRight + borderLeftWidth + borderRightWidth + paddingLeftWidth + paddingRightWidth + notfunctionWidth);
+           total = marginLeft + marginRight + borderLeftWidth + borderRightWidth + paddingLeftWidth + paddingRightWidth + notfunctionWidth;
+          
+        });
+        return total;
+
+        
+       }
+        fadeOut() {
+          let targetElement = this.elements;
+          targetElement.backgroundColor="black"
+          this.elements.forEach((item) => {
+
+            console.log(this.elements);
+            
+            let k = window.setInterval(function () {
+            let initialOpacity = 0
+              if (initialOpacity > 100) {
+                clearInterval(k);
+              } else {
+              
+                item.style.opacity = initialOpacity / 100;
+                item.style.easing = initialOpacity / 100;
+                initialOpacity++;
+              }
+            }, 1000);
+        });
+       }
+    }
+
+      
+
+      const $$ = function (selector) {
+        console.log('$$ is a function');
+        return new PQuery(selector);
+      };
+
+      var hiddenBox = $$('#banner-message');
+      hiddenBox.hide();
+      $$('#button-container button').on(
+        'click',
+        function (event) {
+          alert('Click');
+          hiddenBox.show();
+        }
+      );
+
+      const a = $$('button.continue')
+        .html('change1')
+        .on('click', () => {
+          console.log('Chaining');
+        });
+      const b = $$('#banner-message');
+      console.log('A', a);
+
+      // $$('button.continue').html(
+      //   '<h1>Virtuoyus</h1>'
+      // );
+
+      $$( '.clone').on(
+        'click',
+        function (event) {
+          let input = document.getElementById("clone-search");
+          $$("#test-container").clone(input.value); 
+        }
+      );
+
+      $$( '.highlight').on(
+        'click',
+        function (event) {
+          let input = document.getElementById("highlight-search");
+          $$("*").tagSelector(input.value)
+        }
+      );
+
+      $$( '.width').on(
+        'click',
+        function (event) {
+          let input = document.getElementById("width-search");
+         $$(input.value).width();
+          
+        }
+      );
+
+      $$( '.fade').on(
+        'click',
+        function (event) {
+          let input = document.getElementById("fade-search");
+         $$(input.value).fadeOut();
+          
+        }
+      );
+
+ 
+
+      // searches the entire document, highlights the argument specified in elementSelector()
+
+      // $$("#test-container").clone(".test-container2"); 
+
+      // $$(".test-container2").width();
+
+      // $$("#test-container").fadeOut();
+
+  
+      //   console.log(a.html === b.html);
+
+      //   console.log(
+      //     (() => {
+      //       console.log('hello');
+      //     }) ===
+      //       (() => {
+      //         console.log('hello');
+      //       })
+      //   );
+
+      //   const arr1 = [1, 2, 3];
+      //   const arr2 = [2, 4, 5];
+      //   console.log(arr1 === arr2);
+      //   console.log(arr1.forEach === arr2.forEach);
+    </script>
+  </body>
+</html>
